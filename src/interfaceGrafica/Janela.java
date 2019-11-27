@@ -12,6 +12,7 @@
 package interfaceGrafica;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import dama.Main;
 import dama.Tabuleiro;
@@ -51,6 +52,8 @@ public class Janela extends javax.swing.JFrame {
 		jPanel1 = new ComponenteTabuleiro();
 		jPanel2 = new javax.swing.JPanel();
 		jButton1 = new javax.swing.JButton();
+		JTextField jTextField = new javax.swing.JTextField();
+		
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		Object[] options = { "Facil", "Medio", "Dificil" };

@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import dama.Tabuleiro;
@@ -139,6 +140,9 @@ public class ComponenteTabuleiro extends JPanel  {
 
 
 	void mousePressed(MouseEvent evt) {
+		if (board.getTemEmpate()) {
+			JOptionPane.showMessageDialog(this, "Jogo empatado!");
+		}
 		selectedX = evt.getX() / cellDimension;
 		selectedY = evt.getY() / cellDimension;
 		if (board.getCasa(selectedY, selectedX) == null) {

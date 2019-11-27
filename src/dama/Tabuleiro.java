@@ -13,6 +13,7 @@ public class Tabuleiro implements Cloneable, Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Strategy strategy;
+	private static final int MAX_JOGADAS = 20;
 	private peca[][] tabuleiro;
 	private boolean vez; // vez de quem jogar
 
@@ -20,6 +21,9 @@ public class Tabuleiro implements Cloneable, Serializable {
 		VERMELHA, PRETA, DAMA_VERMELHA, DAMA_PRETA
 	};
 
+	private int contJogadas = 0; // conta jogadas quando houver dama / Jogador.class
+	private boolean temDama = false; // executaJogada()
+	private boolean empatou = false;
 	private boolean terminado = false;
 
 	/*
@@ -47,6 +51,7 @@ public class Tabuleiro implements Cloneable, Serializable {
 		}
 		if (j.getxDestino() == this.strategy.getTamanho() - 1 || j.getxDestino() == 0) {
 			setDama(j.getxDestino(), j.getyDestino());
+			this.temDama = true; // seta que tem dama no tabuleiro
 		}
 	}
 
@@ -163,7 +168,11 @@ public class Tabuleiro implements Cloneable, Serializable {
 	}
 
 	public void declaraVencedor(boolean cor) {
-
+		System.out.println("Vencedor");
+	}
+	
+	public void declaraEmpate() {
+		System.out.println("Empatou");
 	}
 
 	@Override
@@ -220,5 +229,28 @@ public class Tabuleiro implements Cloneable, Serializable {
 		return this.strategy.getTamanho();
 	}
 	
+	// incrementa a quantidade de jogadas apos a criacao de uma Dama
+	public void incJogadas() {
+		this.contJogadas++;
+		verificaEmpate();
+		System.out.println(contJogadas);
+	}
+
+	// verifica se alguma dama foi criada
+	public boolean getTemDama() {
+		return this.temDama;
+	}
+
+	public boolean getTemEmpate() {
+		return this.empatou;
+	}
+	
+	// verifica a quantidade de jogadas executadas apos a criacao de uma Dama para declarar empate
+	private void verificaEmpate() {
+		if(this.contJogadas > MAX_JOGADAS) {
+			empatou = true;
+			declaraEmpate();
+		}
+	}
 
 }
