@@ -57,7 +57,11 @@ public class Jogador {
 					tabuleiro.passaVez();
 				}
 				System.err.println(this.cor + " " + j.toString());
+				if (tabuleiro.getTemDama()) {
+					tabuleiro.incJogadas();
+				}
 				tabuleiro.executaJogada(j);
+				
 				return true;
 			}
 		}

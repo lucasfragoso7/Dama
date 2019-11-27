@@ -45,6 +45,7 @@ public class Main {
 
 		j.getGUI().setPlayerInterface(pc);
 		j.setTabuleiro(t);
+		System.err.println("teste");
 		j.setVisible(true);
 
 	}

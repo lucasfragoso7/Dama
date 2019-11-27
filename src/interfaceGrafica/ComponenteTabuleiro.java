@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import dama.Tabuleiro;
@@ -24,7 +25,7 @@ import dama.Tabuleiro.peca;
 public class ComponenteTabuleiro extends JPanel  {
 
 	private int boardDimension = 320;
-	private int cellDimension = boardDimension / 10;
+	private int cellDimension = boardDimension / 8;
 	private Tabuleiro board;
 	private int selectedX = -1;
 	private int selectedY = -1;
@@ -61,8 +62,8 @@ public class ComponenteTabuleiro extends JPanel  {
 	protected void paintComponent(Graphics g) {
 
 		//desenha o tabuleiro sem pecas
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				if ((i + j) % 2 == 0) {
 					g.setColor(Color.BLACK);
 				} else {
@@ -81,8 +82,8 @@ public class ComponenteTabuleiro extends JPanel  {
 
 		//desenha pecas
 		peca beingDragged = null;
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				if (j == selectedX && i == selectedY) {
 					beingDragged = board.getCasa(i, j);
 					continue;
@@ -139,6 +140,9 @@ public class ComponenteTabuleiro extends JPanel  {
 
 
 	void mousePressed(MouseEvent evt) {
+		if (board.getTemEmpate()) {
+			JOptionPane.showMessageDialog(this, "Jogo empatado!");
+		}
 		selectedX = evt.getX() / cellDimension;
 		selectedY = evt.getY() / cellDimension;
 		if (board.getCasa(selectedY, selectedX) == null) {

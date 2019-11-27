@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class Tabuleiro implements Cloneable, Serializable {
 
+	private static final int MAX_JOGADAS = 20;
 	private peca[][] tabuleiro;
 	private boolean vez; // vez de quem jogar
 
@@ -17,6 +18,9 @@ public class Tabuleiro implements Cloneable, Serializable {
 		VERMELHA, PRETA, DAMA_VERMELHA, DAMA_PRETA
 	};
 
+	private int contJogadas = 0; // conta jogadas quando houver dama / Jogador.class
+	private boolean temDama = false; // executaJogada()
+	private boolean empatou = false;
 	private boolean terminado = false;
 
 	/*
@@ -24,18 +28,18 @@ public class Tabuleiro implements Cloneable, Serializable {
 	 */
 
 	public Tabuleiro() {
-		this.tabuleiro = new peca[10][10];
+		this.tabuleiro = new peca[8][8];
 		this.vez = true;
 
 		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 10; j++) {
+			for (int j = 0; j < 8; j++) {
 				if ((i + j) % 2 == 0) {
 					tabuleiro[i][j] = peca.VERMELHA;
 				}
 			}
 		}
-		for (int i = 5; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 5; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				if ((i + j) % 2 == 0) {
 					tabuleiro[i][j] = peca.PRETA;
 				}
@@ -58,14 +62,15 @@ public class Tabuleiro implements Cloneable, Serializable {
 		}
 		if (j.getxDestino() == 7 || j.getxDestino() == 0) {
 			setDama(j.getxDestino(), j.getyDestino());
+			this.temDama = true; // seta que tem dama no tabuleiro
 		}
 	}
 
 	public ArrayList<Jogada> listaJogadasPossiveis(boolean cor) {
 		ArrayList<Jogada> obrigatorias = new ArrayList<Jogada>();
 		ArrayList<Jogada> js = new ArrayList<Jogada>();
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				if (isPecaCor(cor, i, j)) {
 					js.addAll(listaJogadasPeca(i, j));
 				}
@@ -136,7 +141,7 @@ public class Tabuleiro implements Cloneable, Serializable {
 	}
 
 	private boolean casaValida(int x, int y) {
-		if (x >= 0 && x < 10 && y >= 0 && y < 10) {
+		if (x >= 0 && x < 8 && y >= 0 && y < 8) {
 			return true;
 		}
 		return false;
@@ -174,7 +179,11 @@ public class Tabuleiro implements Cloneable, Serializable {
 	}
 
 	public void declaraVencedor(boolean cor) {
-
+		System.out.println("Vencedor");
+	}
+	
+	public void declaraEmpate() {
+		System.out.println("Empatou");
 	}
 
 	@Override
@@ -184,9 +193,9 @@ public class Tabuleiro implements Cloneable, Serializable {
 			t.vez = true;
 		else
 			t.vez = false;
-		t.tabuleiro = new peca[10][10];
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		t.tabuleiro = new peca[8][8];
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				peca p = this.tabuleiro[i][j];
 				if (p == null) {
 					t.tabuleiro[i][j] = null;
@@ -212,8 +221,8 @@ public class Tabuleiro implements Cloneable, Serializable {
 	}
 
 	public void imprimeTabuleiro() {
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
 				if (isPecaCor(true, i, j)) {
 					System.out.print("V");
 				} else if (isPecaCor(false, i, j)) {
@@ -225,6 +234,30 @@ public class Tabuleiro implements Cloneable, Serializable {
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	// incrementa a quantidade de jogadas apos a criacao de uma Dama
+	public void incJogadas() {
+		this.contJogadas++;
+		verificaEmpate();
+		System.out.println(contJogadas);
+	}
+
+	// verifica se alguma dama foi criada
+	public boolean getTemDama() {
+		return this.temDama;
+	}
+
+	public boolean getTemEmpate() {
+		return this.empatou;
+	}
+	
+	// verifica a quantidade de jogadas executadas apos a criacao de uma Dama para declarar empate
+	private void verificaEmpate() {
+		if(this.contJogadas > MAX_JOGADAS) {
+			empatou = true;
+			declaraEmpate();
+		}
 	}
 
 }
