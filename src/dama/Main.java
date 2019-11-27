@@ -9,16 +9,13 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import dao.GravadorDosJogos;
-import interfaceGrafica.Janela;
-import interfaceGrafica.PlayerController;
+import builder.CriadorDeJogo;
 
 public class Main {
 
-	private static Tabuleiro t;
+	private static CriadorDeJogo builder = new CriadorDeJogo();
 
 	public static void empate() {
-		t.declaraVencedor(true);
 	}
 
 	/**
@@ -32,23 +29,30 @@ public class Main {
 //			System.out.println(d);
 //		}
 //		oin.close();
-
-		Janela j = new Janela();
-		j.setTitle(j.getLabelOne() + " vs " + j.getLabelTwo());
-		t = new Tabuleiro();
-		Jogador v = new Jogador(t, true);
-		Jogador p = new Jogador(t, false);
-		PlayerController pc = new PlayerController(p, v);
-		j.setPlayerInterface(pc);
-
-		GravadorDosJogos logger = new GravadorDosJogos();
-
-		j.getGUI().setPlayerInterface(pc);
-		j.setTabuleiro(t);
-		j.setVisible(true);
+		getModalidadeJogo();
 
 	}
 
+	private static void getModalidadeJogo() {
+		Object[] options = { "Facil", "Medio", "Dificil" };
+		int x = JOptionPane.showOptionDialog(null, "Qual modalidade deseja jogar?", "Aviso", JOptionPane.DEFAULT_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 
+		switch (x) {
+		case 0:
+			builder.criarModoEasy();
+			break;
+		case 1:
+			builder.criarModoMedium();
+			break;
 
+		case 2:
+			builder.criarModoHard();
+			break;
+
+		default:
+			System.out.println("Clicou no local errado");
+			;
+		}
+	}
 }

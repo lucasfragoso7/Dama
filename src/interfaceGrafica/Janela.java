@@ -15,11 +15,13 @@ import javax.swing.JOptionPane;
 
 import dama.Main;
 import dama.Tabuleiro;
+import strategy.Strategy;
 
 public class Janela extends javax.swing.JFrame {
 
 	/** Creates new form Janela */
-	public Janela() {
+	public Janela(int size) {
+		this.size = size;
 		initComponents();
 	}
 
@@ -45,14 +47,16 @@ public class Janela extends javax.swing.JFrame {
 	// Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
-		jPanel1 = new ComponenteTabuleiro();
+		jPanel1 = new ComponenteTabuleiro(size);
 		jPanel2 = new javax.swing.JPanel();
 		jButton1 = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		this.labelOne = JOptionPane.showInputDialog(this, "What's player one name?");
-		this.labelTwo = JOptionPane.showInputDialog(this, "What's player second name?");
+
+		getNomeJogadores();
+
 		jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
 		jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				jPanel1MouseClicked(evt);
@@ -66,6 +70,7 @@ public class Janela extends javax.swing.JFrame {
 				jPanel1MouseReleased(evt);
 			}
 		});
+
 		jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
 			public void mouseDragged(java.awt.event.MouseEvent evt) {
 				jPanel1MouseDragged(evt);
@@ -75,11 +80,11 @@ public class Janela extends javax.swing.JFrame {
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 320, Short.MAX_VALUE));
+				.addGap(0, size, Short.MAX_VALUE));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 320, Short.MAX_VALUE));
+				.addGap(0, size, Short.MAX_VALUE));
 
-		jButton1.setText("Empatou");
+		jButton1.setText("Empatou ");
 		jButton1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButton1ActionPerformed(evt);
@@ -88,15 +93,18 @@ public class Janela extends javax.swing.JFrame {
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
+
 		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jButton1)
-						.addContainerGap(91, Short.MAX_VALUE)));
+						.addContainerGap(10, Short.MAX_VALUE)));
+
 		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jButton1)
 						.addContainerGap(280, Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
+
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap()
 						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -105,6 +113,7 @@ public class Janela extends javax.swing.JFrame {
 						.addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
+
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap()
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -117,6 +126,11 @@ public class Janela extends javax.swing.JFrame {
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
+
+	private void getNomeJogadores() {
+		this.labelOne = JOptionPane.showInputDialog(this, "Qual é o nome do primeiro jogador?");
+		this.labelTwo = JOptionPane.showInputDialog(this, "Qual é o nome do segunfo jogador?");
+	}
 
 	private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel1MouseClicked
 		// ((ComponenteTabuleiro) jPanel1).mouseClicked(evt);
@@ -144,7 +158,7 @@ public class Janela extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new Janela().setVisible(true);
+				new Janela(10).setVisible(true);
 			}
 		});
 	}
@@ -155,6 +169,9 @@ public class Janela extends javax.swing.JFrame {
 	private String labelTwo;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel2;
+	private Strategy strategyTabuleiro;
+	private int size;
+
 	// End of variables declaration//GEN-END:variables
 	public String getLabelOne() {
 		return labelOne;
@@ -170,6 +187,18 @@ public class Janela extends javax.swing.JFrame {
 
 	public void setLabelTwo(String labelTwo) {
 		this.labelTwo = labelTwo;
+	}
+
+	public Strategy getStrategyTabuleiro() {
+		return strategyTabuleiro;
+	}
+
+	public void setStrategyTabuleiro(Strategy strategyTabuleiro) {
+		this.strategyTabuleiro = strategyTabuleiro;
+	}
+
+	public void setSize(int size) {
+		size = size;
 	}
 
 }

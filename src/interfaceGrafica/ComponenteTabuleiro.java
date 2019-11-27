@@ -23,7 +23,7 @@ import dama.Tabuleiro.peca;
 
 public class ComponenteTabuleiro extends JPanel  {
 
-	private int boardDimension = 320;
+	private int boardDimension = 500;
 	private int cellDimension = boardDimension / 10;
 	private Tabuleiro board;
 	private int selectedX = -1;
@@ -34,8 +34,9 @@ public class ComponenteTabuleiro extends JPanel  {
 	private BufferedImage redPiece, blackPiece, redKing, blackKing;
 	private boolean movimenting;
 
-	public ComponenteTabuleiro() {
+	public ComponenteTabuleiro(int size) {
 		super();
+		this.boardDimension = size;
 		this.setMinimumSize(new Dimension(boardDimension, boardDimension));
 		this.setMaximumSize(new Dimension(boardDimension, boardDimension));
 		try {
@@ -61,8 +62,8 @@ public class ComponenteTabuleiro extends JPanel  {
 	protected void paintComponent(Graphics g) {
 
 		//desenha o tabuleiro sem pecas
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < this.board.getQttdCasa(); i++) {
+			for (int j = 0; j < this.board.getQttdCasa(); j++) {
 				if ((i + j) % 2 == 0) {
 					g.setColor(Color.BLACK);
 				} else {
@@ -81,8 +82,8 @@ public class ComponenteTabuleiro extends JPanel  {
 
 		//desenha pecas
 		peca beingDragged = null;
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < this.board.getQttdCasa(); i++) {
+			for (int j = 0; j < this.board.getQttdCasa(); j++) {
 				if (j == selectedX && i == selectedY) {
 					beingDragged = board.getCasa(i, j);
 					continue;

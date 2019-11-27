@@ -7,9 +7,16 @@ package dama;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import strategy.Strategy;
+
 
 public class Tabuleiro implements Cloneable, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Strategy strategy;
 	private peca[][] tabuleiro;
 	private boolean vez; // vez de quem jogar
 
@@ -23,24 +30,10 @@ public class Tabuleiro implements Cloneable, Serializable {
 	 * pecas pretas = false sentido pra cima
 	 */
 
-	public Tabuleiro() {
-		this.tabuleiro = new peca[10][10];
-		this.vez = true;
-
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 10; j++) {
-				if ((i + j) % 2 == 0) {
-					tabuleiro[i][j] = peca.VERMELHA;
-				}
-			}
-		}
-		for (int i = 5; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				if ((i + j) % 2 == 0) {
-					tabuleiro[i][j] = peca.PRETA;
-				}
-			}
-		}
+	public Tabuleiro(Strategy strategyTabuleiro) {
+		this.strategy = strategyTabuleiro;
+		this.tabuleiro = strategyTabuleiro.getTabuleiroComPeca();
+		this.vez = true;	
 	}
 
 	/**
@@ -56,7 +49,7 @@ public class Tabuleiro implements Cloneable, Serializable {
 			int yComida = (j.getyOrigem() + j.getyDestino()) / 2;
 			tabuleiro[xComida][yComida] = null;
 		}
-		if (j.getxDestino() == 7 || j.getxDestino() == 0) {
+		if (j.getxDestino() == this.strategy.getTamanho() - 1 || j.getxDestino() == 0) {
 			setDama(j.getxDestino(), j.getyDestino());
 		}
 	}
@@ -64,8 +57,8 @@ public class Tabuleiro implements Cloneable, Serializable {
 	public ArrayList<Jogada> listaJogadasPossiveis(boolean cor) {
 		ArrayList<Jogada> obrigatorias = new ArrayList<Jogada>();
 		ArrayList<Jogada> js = new ArrayList<Jogada>();
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < this.strategy.getTamanho(); i++) {
+			for (int j = 0; j < this.strategy.getTamanho(); j++) {
 				if (isPecaCor(cor, i, j)) {
 					js.addAll(listaJogadasPeca(i, j));
 				}
@@ -136,7 +129,7 @@ public class Tabuleiro implements Cloneable, Serializable {
 	}
 
 	private boolean casaValida(int x, int y) {
-		if (x >= 0 && x < 10 && y >= 0 && y < 10) {
+		if (x >= 0 && x < this.strategy.getTamanho() && y >= 0 && y < this.strategy.getTamanho()) {
 			return true;
 		}
 		return false;
@@ -179,14 +172,14 @@ public class Tabuleiro implements Cloneable, Serializable {
 
 	@Override
 	public Tabuleiro clone() {
-		Tabuleiro t = new Tabuleiro();
+		Tabuleiro t = new Tabuleiro(this.strategy);
 		if (this.vez)
 			t.vez = true;
 		else
 			t.vez = false;
-		t.tabuleiro = new peca[10][10];
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		t.tabuleiro = this.strategy.getTabuleiro();
+		for (int i = 0; i < this.strategy.getTamanho(); i++) {
+			for (int j = 0; j < this.strategy.getTamanho(); j++) {
 				peca p = this.tabuleiro[i][j];
 				if (p == null) {
 					t.tabuleiro[i][j] = null;
@@ -212,8 +205,8 @@ public class Tabuleiro implements Cloneable, Serializable {
 	}
 
 	public void imprimeTabuleiro() {
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < this.strategy.getTamanho(); i++) {
+			for (int j = 0; j < this.strategy.getTamanho(); j++) {
 				if (isPecaCor(true, i, j)) {
 					System.out.print("V");
 				} else if (isPecaCor(false, i, j)) {
@@ -225,6 +218,10 @@ public class Tabuleiro implements Cloneable, Serializable {
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	public int getQttdCasa() {
+		return this.strategy.getTamanho();
 	}
 
 }
