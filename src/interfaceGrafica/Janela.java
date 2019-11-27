@@ -12,8 +12,8 @@
 package interfaceGrafica;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
+import builder.DamaBuilder;
 import dama.Main;
 import dama.Tabuleiro;
 import strategy.EasyMode;
@@ -25,6 +25,7 @@ public class Janela extends javax.swing.JFrame {
 	/** Creates new form Janela */
 	public Janela() {
 		initComponents();
+
 	}
 
 	public void setTabuleiro(Tabuleiro t) {
@@ -52,29 +53,30 @@ public class Janela extends javax.swing.JFrame {
 		jPanel1 = new ComponenteTabuleiro();
 		jPanel2 = new javax.swing.JPanel();
 		jButton1 = new javax.swing.JButton();
-		JTextField jTextField = new javax.swing.JTextField();
-		
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		Object[] options = { "Facil", "Medio", "Dificil" };
 		int x = JOptionPane.showOptionDialog(null, "Qual modalidade deseja jogar?", "Aviso", JOptionPane.DEFAULT_OPTION,
 				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-		switch (x) {
-		case 0:
-			this.strategy = new EasyMode();
-			break;
-		case 1:
-			this.strategy = new MediumMode();
-			break;
-
-		case 2:
-			this.strategy = new MediumMode();
-			break;
-
-		default:
-			System.out.println("Clicou no local errado");
-			;
-		}
+		
+		montaTabuleiro(x);
+		
+//		switch (x) {
+//		case 0:
+//			this.strategy = new EasyMode();
+//			break;
+//		case 1:
+//			this.strategy = new MediumMode();
+//			break;
+//
+//		case 2:
+//			this.strategy = new MediumMode();
+//			break;
+//
+//		default:
+//			System.out.println("Clicou no local errado");
+//			;
+//		}
 		getNameJogadores();
 		jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -144,9 +146,32 @@ public class Janela extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
 
+	private void montaTabuleiro(int x) {
+		switch (x) {
+		case 0:
+			this.strategy = new EasyMode();
+			break;
+		case 1:
+			this.strategy = new MediumMode();
+			break;
+
+		case 2:
+			this.strategy = new MediumMode();
+			break;
+
+		default:
+			System.out.println("Clicou no local errado");
+			;
+		}
+	}
+
 	private void getNameJogadores() {
-		this.labelOne = JOptionPane.showInputDialog(this, "What's player one name?");
-		this.labelTwo = JOptionPane.showInputDialog(this, "What's player second name?");
+		this.labelOne = JOptionPane.showInputDialog(this, "Digite o nome do jogador um?");
+		if (labelOne.isEmpty() || labelOne.isBlank())
+			labelOne = "Jogador 1";
+		this.labelTwo = JOptionPane.showInputDialog(this, "Digite o nome do jogador dois?");
+		if (labelTwo.isEmpty() || labelTwo.isBlank())
+			labelTwo = "Jogador 2";
 	}
 
 	private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel1MouseClicked
@@ -187,6 +212,7 @@ public class Janela extends javax.swing.JFrame {
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel2;
 	private Strategy strategy;
+	private DamaBuilder builder;
 
 	// End of variables declaration//GEN-END:variables
 	public String getLabelOne() {

@@ -141,7 +141,7 @@ public class ComponenteTabuleiro extends JPanel  {
 
 	void mousePressed(MouseEvent evt) {
 		if (board.getTemEmpate()) {
-			JOptionPane.showMessageDialog(this, "Jogo empatado!");
+			JOptionPane.showMessageDialog(this, "Jogo empatado!"); // chama o aviso de que o jogo está empatado
 		}
 		selectedX = evt.getX() / cellDimension;
 		selectedY = evt.getY() / cellDimension;

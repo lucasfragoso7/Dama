@@ -7,11 +7,7 @@ package dama;
 
 import java.io.IOException;
 
-import javax.swing.JOptionPane;
-
-import dao.GravadorDosJogos;
-import interfaceGrafica.Janela;
-import interfaceGrafica.PlayerController;
+import builder.DamaBuilder;
 
 public class Main {
 
@@ -32,22 +28,26 @@ public class Main {
 //			System.out.println(d);
 //		}
 //		oin.close();
+		
+		DamaBuilder builder = new DamaBuilder();
+		builder.montaJanela();
+		
 
-		Janela j = new Janela();
-		j.setTitle(j.getLabelOne() + " vs " + j.getLabelTwo());
-		t = new Tabuleiro(j.getStrategy());
-		Jogador v = new Jogador(t, true);
-		Jogador p = new Jogador(t, false);
-		PlayerController pc = new PlayerController(p, v);
-		j.setPlayerInterface(pc);
-
-		GravadorDosJogos logger = new GravadorDosJogos();
-
-		j.getGUI().setPlayerInterface(pc);
-		j.setTabuleiro(t);
-		System.err.println("teste");
-		j.setVisible(true);
-
+//		Janela j = new Janela();
+//		j.setTitle(j.getLabelOne() + " vs " + j.getLabelTwo());
+//		t = new Tabuleiro(j.getStrategy());
+//		Jogador v = new Jogador(t, true);
+//		Jogador p = new Jogador(t, false);
+//		PlayerController pc = new PlayerController(p, v);
+//		j.setPlayerInterface(pc);
+//
+//		GravadorDosJogos logger = new GravadorDosJogos();
+//
+//		j.getGUI().setPlayerInterface(pc);
+//		j.setTabuleiro(t);
+//		System.err.println("teste");
+//		j.setVisible(true);
+//
 	}
 
 
