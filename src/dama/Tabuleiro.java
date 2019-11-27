@@ -21,7 +21,7 @@ public class Tabuleiro implements Cloneable, Serializable {
 		VERMELHA, PRETA, DAMA_VERMELHA, DAMA_PRETA
 	};
 
-	private int contJogadas = 0; // conta jogadas quando houver dama / Jogador.class
+	private int contJogadas = 0; // conta jogadas quando houver dama | Jogador.class
 	private boolean temDama = false; // executaJogada()
 	private boolean empatou = false;
 	private boolean terminado = false;
@@ -243,6 +243,10 @@ public class Tabuleiro implements Cloneable, Serializable {
 
 	public boolean getTemEmpate() {
 		return this.empatou;
+	}
+	
+	public int getContJogadas() {
+		return contJogadas;
 	}
 	
 	// verifica a quantidade de jogadas executadas apos a criacao de uma Dama para declarar empate

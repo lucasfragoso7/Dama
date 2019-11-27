@@ -17,6 +17,7 @@ import builder.DamaBuilder;
 import dama.Main;
 import dama.Tabuleiro;
 import strategy.EasyMode;
+import strategy.HardMode;
 import strategy.MediumMode;
 import strategy.Strategy;
 
@@ -53,6 +54,9 @@ public class Janela extends javax.swing.JFrame {
 		jPanel1 = new ComponenteTabuleiro();
 		jPanel2 = new javax.swing.JPanel();
 		jButton1 = new javax.swing.JButton();
+		
+		testText = new javax.swing.JTextField();
+		
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		Object[] options = { "Facil", "Medio", "Dificil" };
@@ -114,12 +118,19 @@ public class Janela extends javax.swing.JFrame {
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
-		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jButton1)
-						.addContainerGap(91, Short.MAX_VALUE)));
-		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jButton1)
-						.addContainerGap(280, Short.MAX_VALUE)));
+//		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jButton1)
+//						.addContainerGap(91, Short.MAX_VALUE)));
+//		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(jButton1)
+//						.addContainerGap(280, Short.MAX_VALUE)));
+
+//		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(testText)
+//						.addContainerGap(91, Short.MAX_VALUE)));
+//		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addComponent(testText)
+//						.addContainerGap(280, Short.MAX_VALUE)));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -156,7 +167,7 @@ public class Janela extends javax.swing.JFrame {
 			break;
 
 		case 2:
-			this.strategy = new MediumMode();
+			this.strategy = new HardMode();
 			break;
 
 		default:
@@ -211,8 +222,8 @@ public class Janela extends javax.swing.JFrame {
 	private String labelTwo;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel2;
+	private javax.swing.JTextField testText;
 	private Strategy strategy;
-	private DamaBuilder builder;
 
 	// End of variables declaration//GEN-END:variables
 	public String getLabelOne() {
