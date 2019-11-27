@@ -23,7 +23,7 @@ import dama.Tabuleiro.peca;
 
 public class ComponenteTabuleiro extends JPanel  {
 
-	private int boardDimension = 320;
+	private int boardDimension = 400;
 	private int cellDimension = boardDimension / 10;
 	private Tabuleiro board;
 	private int selectedX = -1;
@@ -61,8 +61,8 @@ public class ComponenteTabuleiro extends JPanel  {
 	protected void paintComponent(Graphics g) {
 
 		//desenha o tabuleiro sem pecas
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < board.getQttdCasa(); i++) {
+			for (int j = 0; j < board.getQttdCasa(); j++) {
 				if ((i + j) % 2 == 0) {
 					g.setColor(Color.BLACK);
 				} else {
@@ -81,8 +81,8 @@ public class ComponenteTabuleiro extends JPanel  {
 
 		//desenha pecas
 		peca beingDragged = null;
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < board.getQttdCasa(); i++) {
+			for (int j = 0; j < board.getQttdCasa(); j++) {
 				if (j == selectedX && i == selectedY) {
 					beingDragged = board.getCasa(i, j);
 					continue;

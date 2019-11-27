@@ -15,6 +15,9 @@ import javax.swing.JOptionPane;
 
 import dama.Main;
 import dama.Tabuleiro;
+import strategy.EasyMode;
+import strategy.MediumMode;
+import strategy.Strategy;
 
 public class Janela extends javax.swing.JFrame {
 
@@ -50,8 +53,26 @@ public class Janela extends javax.swing.JFrame {
 		jButton1 = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		this.labelOne = JOptionPane.showInputDialog(this, "What's player one name?");
-		this.labelTwo = JOptionPane.showInputDialog(this, "What's player second name?");
+		Object[] options = { "Facil", "Medio", "Dificil" };
+		int x = JOptionPane.showOptionDialog(null, "Qual modalidade deseja jogar?", "Aviso", JOptionPane.DEFAULT_OPTION,
+				JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+		switch (x) {
+		case 0:
+			this.strategy = new EasyMode();
+			break;
+		case 1:
+			this.strategy = new MediumMode();
+			break;
+
+		case 2:
+			this.strategy = new MediumMode();
+			break;
+
+		default:
+			System.out.println("Clicou no local errado");
+			;
+		}
+		getNameJogadores();
 		jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 		jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -75,9 +96,9 @@ public class Janela extends javax.swing.JFrame {
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 320, Short.MAX_VALUE));
+				.addGap(0, this.strategy.getTamanhoJanela(), Short.MAX_VALUE));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 320, Short.MAX_VALUE));
+				.addGap(0, this.strategy.getTamanhoJanela(), Short.MAX_VALUE));
 
 		jButton1.setText("Empatou");
 		jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -97,6 +118,7 @@ public class Janela extends javax.swing.JFrame {
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
+		
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap()
 						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -105,6 +127,7 @@ public class Janela extends javax.swing.JFrame {
 						.addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
+		
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addContainerGap()
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -117,6 +140,11 @@ public class Janela extends javax.swing.JFrame {
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
+
+	private void getNameJogadores() {
+		this.labelOne = JOptionPane.showInputDialog(this, "What's player one name?");
+		this.labelTwo = JOptionPane.showInputDialog(this, "What's player second name?");
+	}
 
 	private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jPanel1MouseClicked
 		// ((ComponenteTabuleiro) jPanel1).mouseClicked(evt);
@@ -155,6 +183,8 @@ public class Janela extends javax.swing.JFrame {
 	private String labelTwo;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel2;
+	private Strategy strategy;
+
 	// End of variables declaration//GEN-END:variables
 	public String getLabelOne() {
 		return labelOne;
@@ -170,6 +200,14 @@ public class Janela extends javax.swing.JFrame {
 
 	public void setLabelTwo(String labelTwo) {
 		this.labelTwo = labelTwo;
+	}
+
+	public Strategy getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
 	}
 
 }

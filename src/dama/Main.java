@@ -35,7 +35,7 @@ public class Main {
 
 		Janela j = new Janela();
 		j.setTitle(j.getLabelOne() + " vs " + j.getLabelTwo());
-		t = new Tabuleiro();
+		t = new Tabuleiro(j.getStrategy());
 		Jogador v = new Jogador(t, true);
 		Jogador p = new Jogador(t, false);
 		PlayerController pc = new PlayerController(p, v);
